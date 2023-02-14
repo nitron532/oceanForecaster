@@ -9,20 +9,24 @@ def readToday(fileName: str):
             count+=1
             if(count<=2):
                 continue
-            if(line[8:10]!= todayDate[8:10]):
+            if(count == 26):
                 break
             details.append(line)
     return details
 
 #if(line.substring(8,10)!= todaysday): stop loop, return list  | has to ignore first two lines
 
+#NTBC1 and 46053 are the closest buoys to ventura point, ntbc1 is closer to shore
+
 buoyNumber = str(input("Input buoy number: "))
 url = 'https://www.ndbc.noaa.gov/data/realtime2/' + buoyNumber + '.txt'
 wGetFile = wget.download(url)
-print("Retrieving ")
 buoyDataFile = readToday(wGetFile)
-for i in buoyDataFile:
-    print(i)
+for i in range(len(buoyDataFile)):
+    print(buoyDataFile[i])
+
+
+
 
 
 
