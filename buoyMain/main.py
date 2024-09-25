@@ -22,7 +22,9 @@ def readToday(fileName: str):
     return details
 
 #if(line.substring(8,10)!= todaysday): stop loop, return list  | has to ignore first two lines, problem is live data file uses different time zone than PST
+"""
 
+"""
 #NTBC1 and 46053 are the closest buoys to ventura point, ntbc1 is closer to shore 
 
 def searchHour(dayList):
@@ -40,17 +42,23 @@ def searchHour(dayList):
     print(strQuery)
     
     for i in range(len(dayList)):
-        hour = dayList[i] #instead of hardcoding index of hour, replace spaces with special characters, first space = year, ... MM = missing
+        hour = dayList[i] 
+        readableHour = ""
         if(hour[11:13] == strQuery):
-            windSpeed = str(float(hour[22:25]) * 3.281)
-           # print(windSpeed)
-            gustSpeed = str(float(hour[27:30]) * 3.281)
-            #print(gustSpeed)
-            waveHeight = str(float(hour[33:36]) * 3.281)
-            #print(waveHeight)
-            imperial = hour[0:21] + " Wind Speed: " + windSpeed + "ft/s " + "Gust Speed: " +  gustSpeed + "ft/s " + "Wave Height: " + waveHeight + "ft " + hour[36:]
-            print(imperial +"test")
-            return imperial
+            for i in range(len(hour)):
+                startIndex = 0
+                endIndex = 0
+                if hour[i] == "&" and hour[i+1] != "&":
+                    startIndex = i+1
+                    endIndex = i+1
+                    while hour[i+1] != "&" and i != (len(hour)-2):
+                        endIndex +=1
+                        i+=1
+                    readableHour += hour[startIndex:endIndex]
+                    #count +=1 save for ex: count = 1 when the data the loop is on is the wind speed or whatever it actually is
+            return readableHour
+
+
 
 #for an approximate result, multiply the length value by 3.281
 #GMT is 8 hours ahead of PST
@@ -66,7 +74,7 @@ wGetFile = wget.download(url)
 buoyDataFile = readToday(wGetFile)
 toDelete = str(wGetFile)
 measurements = searchHour(buoyDataFile)
-print(measurements) #showing "none"
+print(measurements) #showing "none" sometimes live data doesnt have searched for hour, imperial is returned as blank, should have check for "none"
 os.remove(toDelete)
 #input(what hour search for / what should i do now : search for hour option)
 
