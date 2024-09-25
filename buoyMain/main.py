@@ -45,6 +45,7 @@ def searchHour(dayList):
         hour = dayList[i] 
         readableHour = ""
         if(hour[11:13] == strQuery):
+            count = -1
             for i in range(len(hour)):
                 startIndex = 0
                 endIndex = 0
@@ -54,12 +55,50 @@ def searchHour(dayList):
                     while hour[i+1] != "&" and i != (len(hour)-2):
                         endIndex +=1
                         i+=1
+                    count+=1
+                    match count:
+                        case 0:
+                            readableHour += "Month: "
+                        case 1:
+                            readableHour += "\n Day (GMT): "
+                        case 2:
+                            readableHour += "\n Hour (GMT): "
+                        case 3:
+                            readableHour+= "\n Minute: "
+                        case 4:
+                            readableHour+= "\n Wind Direction (degrees): "
+                        case 5:
+                            readableHour+= "\n Wind Speed (meters/sec): "
+                        case 6: 
+                            readableHour+= "\n Peak Gust Speed (meters/sec): "
+                        case 7:
+                            readableHour+= "\n Significant Wave Height (meters): "
+                        case 8:
+                            readableHour+= "\n Dominant Wave Period (sec): "
+                        case 9:
+                            readableHour+= "\n Average Wave Period (sec): "
+                        case 10:
+                            readableHour+= "\n Dominant Period Wave Direction (degrees): "
+                        case 11:
+                            readableHour += "\n Sea Level Pressure (hPa): "
+                        case 12:
+                            readableHour += "\n Air Temperature (celsius): "
+                        case 13:
+                            readableHour += "\n Sea Surface Temperature (celsius): "
+                        case 14:
+                            readableHour += "\n Dewpoint Temperature (celisus): "
+                        case 15:
+                            readableHour += "\n Station Visibility (nautical miles): "
+                        case 16:
+                            readableHour += "\n Pressure Tendency (hPa): "
+                        case 17:
+                            readableHour += "\n Tide (feet): "
                     readableHour += hour[startIndex:endIndex]
                     #count +=1 save for ex: count = 1 when the data the loop is on is the wind speed or whatever it actually is
             return readableHour
 
 
-
+#for descriptions of data categories, visit https://www.ndbc.noaa.gov/faq/measdes.shtml
 #for an approximate result, multiply the length value by 3.281
 #GMT is 8 hours ahead of PST
 ##YY  MM DD hh mm WDIR WSPD GST  WVHT   DPD   APD MWD   PRES  ATMP  WTMP  DEWP  VIS PTDY  TIDE
