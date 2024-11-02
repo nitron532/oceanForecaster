@@ -94,11 +94,13 @@ def searchHour(dayList):
                         case 17:
                             readableHour += "\n Tide (feet): "
                     readableHour += hour[startIndex:endIndex]
-                    #count +=1 save for ex: count = 1 when the data the loop is on is the wind speed or whatever it actually is
             return readableHour
 
 
 #for descriptions of data categories, visit https://www.ndbc.noaa.gov/faq/measdes.shtml
+#ask user if they want to access specific hour or most recent data
+
+
 #for an approximate result, multiply the length value by 3.281
 #GMT is 8 hours ahead of PST
 ##YY  MM DD hh mm WDIR WSPD GST  WVHT   DPD   APD MWD   PRES  ATMP  WTMP  DEWP  VIS PTDY  TIDE
@@ -107,7 +109,7 @@ def searchHour(dayList):
 #0123456789
 
 
-buoyNumber = str(input("Input buoy number: "))
+buoyNumber = str(input("Input buoy number, station names must be all CAPS: "))
 url = 'https://www.ndbc.noaa.gov/data/realtime2/' + buoyNumber + '.txt'
 wGetFile = wget.download(url)
 buoyDataFile = readToday(wGetFile)
